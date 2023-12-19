@@ -14,4 +14,4 @@ JOIN clientes c
 	ON v.id_cliente = c.id_cliente
 WHERE v.fecha_venta 
 	BETWEEN current_time() - INTERVAL 1 YEAR AND current_time()    
-    AND e.id_empleado= 4;
+    AND e.nombre_empleado= 'Ana García';

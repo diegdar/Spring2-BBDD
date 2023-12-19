@@ -1,14 +1,14 @@
+DROP DATABASE IF EXISTS optica;
 CREATE DATABASE optica;
 
 USE optica;
 
 CREATE TABLE proveedores(
-nif_proveedor varchar(9) NOT NULL,
+nif_proveedor varchar(9) NOT NULL PRIMARY KEY UNIQUE,
 nombre_proveedor varchar(50) NOT NULL,
 direccion_proveedor varchar(50) NOT NULL,
 telf_proveedor varchar (15),
-fax_proveedor varchar(15),
-PRIMARY KEY (nif_proveedor)  
+fax_proveedor varchar(15)
 );
 
 INSERT INTO 
@@ -25,15 +25,14 @@ VALUES
 ('I12345678', 'MediaMarkt (Barcelona)', 'Calle Gran Vía, 2, 08012, Barcelona', '935948816', '935948817');
 
 CREATE TABLE gafas(
-id_gafa int NOT NULL AUTO_INCREMENT,
+id_gafa int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 marca_gafa varchar(20) NOT NULL, 
-graduacion float(5,2)NOT NULL,
+graduacion float NOT NULL,
 tipo_montura varchar(30) NOT NULL,
 color_montura varchar(30) NOT NULL,
 color_vidrio varchar(30) NOT NULL,
-precio smallint NOT NULL,
+precio smallint UNSIGNED NOT NULL,
 nif_proveedor varchar(15) NOT NULL,
-PRIMARY KEY (id_gafa),
 CONSTRAINT fk_pedidos_proveedores FOREIGN KEY (nif_proveedor) REFERENCES proveedores (nif_proveedor)
 );
 
@@ -49,9 +48,8 @@ VALUES
 ('Chanel', 10.00, 'Metálica', 'Oro rosa', 'Violeta', 300, 'I12345678');
 
 CREATE TABLE empleados(
-id_empleado int NOT NULL AUTO_INCREMENT,
-nombre_empleado varchar(50) NOT NULL,
-PRIMARY KEY (id_empleado)
+id_empleado int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+nombre_empleado varchar(50) NOT NULL
 );
 
 INSERT INTO 
@@ -67,15 +65,14 @@ VALUES
 	(8, 'Isabel Martínez');
 
 CREATE TABLE optica.clientes (
-  id_cliente INT NOT NULL AUTO_INCREMENT,
+  id_cliente INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   nombre_cliente VARCHAR(50) NOT NULL,
   direccion_cliente VARCHAR(50) NULL,
   telf_cliente VARCHAR(15) NULL,
   email VARCHAR(50) NULL,
   cliente_recomendo VARCHAR(45) NULL,
-	-- CURRENT_TIMESTAMP: introduce automaticamente la fecha y hora en que se produce el registro 
-  fecha_registro_cliente DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (id_cliente));
+	/* CURRENT_TIMESTAMP: introduce automaticamente la fecha y hora en que se produce el registro */
+  fecha_registro_cliente DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP);
 
 -- He creado varias inserciones para que la fecha de venta se registre en momentos diferentes
 INSERT INTO 
@@ -107,12 +104,11 @@ VALUES
 -- ----------------------------------
     
 CREATE TABLE ventas( 
-id_venta int NOT NULL AUTO_INCREMENT,
-id_gafa int NOT NULL,
-id_empleado int NOT NULL,
-id_cliente int NOT NULL,
+id_venta int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+id_gafa int UNSIGNED NOT NULL,
+id_empleado int UNSIGNED NOT NULL,
+id_cliente int UNSIGNED NOT NULL,
 fecha_venta DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-PRIMARY KEY(id_venta),
 CONSTRAINT fK_ventas_empleados FOREIGN KEY (id_empleado) REFERENCES empleados (id_empleado),
 CONSTRAINT fk_ventas_gafas FOREIGN KEY (id_gafa) REFERENCES gafas (id_gafa),
 CONSTRAINT fk_ventas_clientes FOREIGN KEY (id_cliente) REFERENCES clientes (id_cliente)
@@ -123,16 +119,17 @@ INSERT INTO
 	ventas (id_gafa, id_empleado, id_cliente) 
 VALUES
 	(5, 4, 3),
+	(3, 7, 6);
+INSERT INTO 
+	ventas (id_gafa, id_empleado, id_cliente) 
+VALUES   
 	(6, 5, 2),
 	(1, 4, 3);
-    
 INSERT INTO 
 ventas (id_gafa, id_empleado, id_cliente) 
 VALUES
-	(3, 7, 6),
 	(2, 4, 2),
 	(5, 5, 3);
-    
 INSERT INTO 
 	ventas (id_gafa, id_empleado, id_cliente) 
 VALUES  
