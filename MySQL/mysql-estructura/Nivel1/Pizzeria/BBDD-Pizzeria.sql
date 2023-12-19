@@ -1,16 +1,16 @@
+DROP DATABASE IF EXISTS pizzeria;
 CREATE DATABASE pizzeria;
 
 USE pizzeria;
 
 CREATE TABLE clientes(
-id_cliente int AUTO_INCREMENT NOT NULL,
+id_cliente int  UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
 nom_cliente varchar (50) NOT NULL,
 direccion varchar(50) NOT NULL,
 cp varchar(5) NOT NULL,
 localidad varchar(15) NOT NULL,
 provincia varchar(15) NOT NULL,
-telefono varchar(12) NOT NULL,
-PRIMARY KEY (id_cliente)
+telefono varchar(12) NOT NULL
 );
 
 INSERT INTO 
@@ -24,26 +24,24 @@ VALUES
 ('Luis González', 'Calle de la Independencia, 101', '37002', 'Salamanca', 'Salamanca', '923 456 789');
 
 CREATE TABLE categoriasPizzas(
-id_categoriaPizza int NOT NULL AUTO_INCREMENT,
-nom_categoria varchar(30),
-PRIMARY KEY(id_categoriaPizza)
+id_categoriaPizza int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+nom_categoria varchar(30)
 );
 
-INSERT INTO categoriasPizzas (nom_categoria)
+INSERT INTO categoriasPizzas 
 VALUES
-('Clásicas'),
-('Exóticas'),
-('Vegetarianas');
+(1, 'Clásicas'),
+(2, 'Exóticas'),
+(3, 'Vegetarianas');
 
 CREATE TABLE productos(
-id_producto int NOT NULL AUTO_INCREMENT,
+id_producto int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 nom_producto varchar(30) NOT NULL,
-precio float,
+precio float UNSIGNED,
 tipo_producto enum('pizzas', 'hamburguesas', 'bebidas') NOT NULL,
 descripcion varchar(100),
 imagen varchar(120),
-id_categoriaPizza int,
-PRIMARY KEY(id_producto),
+id_categoriaPizza int UNSIGNED,
 CONSTRAINT fk_productos_categoriasPizzas FOREIGN KEY (id_categoriaPizza) REFERENCES categoriasPizzas (id_categoriaPizza)
 );
 
@@ -68,12 +66,11 @@ VALUES
 ('Agua', 'Agua mineral', 'img/agua.jpg', 1.99, 'bebidas');
 
 CREATE TABLE tiendas(
-id_tienda int NOT NULL AUTO_INCREMENT,
+id_tienda int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 direccion varchar(50) NOT NULL,
 cp varchar(5) NOT NULL,
 localidad varchar(15) NOT NULL,
-provincia varchar(15) NOT NULL,
-PRIMARY KEY (id_tienda)
+provincia varchar(15) NOT NULL
 );
 
 -- CREACION DE LAS TIENDAS
@@ -85,13 +82,12 @@ VALUES
 ('Paseo de Colón, 56', '46002', 'Valencia', 'Valencia');
 
 CREATE TABLE empleados(
-id_empleado int NOT NULL AUTO_INCREMENT,
+id_empleado int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 nom_empleado varchar(50) NOT NULL,
-nif varchar(9) NOT NULL,
+nif varchar(9) NOT NULL UNIQUE,
 puesto enum('cocinero', 'repartidor'),
 telefono varchar(12) NOT NULL,
-id_tienda int NOT NULL,
-PRIMARY KEY (id_empleado),
+id_tienda int UNSIGNED NOT NULL ,
 CONSTRAINT fk_empleados_tiendas FOREIGN KEY (id_tienda) REFERENCES tiendas (id_tienda)
 );
 INSERT INTO empleados (nom_empleado, nif, puesto, telefono, id_tienda)
@@ -106,16 +102,15 @@ VALUES
 ('Fernando Hernández', '87654321H', 'repartidor', '890 456 789', 1);
 
 CREATE TABLE pedidos(
-id_pedido int AUTO_INCREMENT NOT NULL,
+id_pedido int UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
 fecha_pedido datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 tipo_pedido enum('domicilio','tienda') NOT NULL,
-id_producto int NOT NULL,
-cantidad_productos smallint NOT NULL,
-importe_total float,
-id_cliente int NOT NULL,
-id_empleado int NOT NULL,
-id_tienda int NOT NULL,
-PRIMARY KEY (id_pedido),
+id_producto int UNSIGNED NOT NULL,
+cantidad_productos TINYINT NOT NULL,
+importe_total float UNSIGNED,
+id_cliente int UNSIGNED NOT NULL,
+id_empleado int UNSIGNED NOT NULL,
+id_tienda int UNSIGNED NOT NULL,
 CONSTRAINT fk_pedidos_clientes FOREIGN KEY (id_cliente) REFERENCES clientes (id_cliente),
 CONSTRAINT fk_pedidos_productos FOREIGN KEY (id_producto) REFERENCES productos (id_producto),
 CONSTRAINT fk_pedidos_empleados FOREIGN KEY (id_empleado) REFERENCES empleados (id_empleado),
@@ -135,11 +130,10 @@ VALUES
 ('tienda', 10, 8, 23.92, 2, 1, 2);
 
 CREATE TABLE repartos(
-id_reparto int AUTO_INCREMENT NOT NULL,
+id_reparto int UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
 fecha_reparto datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-id_empleado int NOT NULL,
-id_pedido int NOT NULL,
-PRIMARY KEY (id_reparto),
+id_empleado int UNSIGNED NOT NULL,
+id_pedido int UNSIGNED NOT NULL,
 CONSTRAINT fk_repartos_pedidos FOREIGN KEY (id_pedido) REFERENCES pedidos (id_pedido),
 CONSTRAINT fk_repartos_empleados FOREIGN KEY (id_empleado) REFERENCES empleados (id_empleado)
 );
