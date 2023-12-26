@@ -4,15 +4,16 @@ CREATE DATABASE optica;
 USE optica;
 
 CREATE TABLE proveedores(
-nif_proveedor varchar(9) NOT NULL PRIMARY KEY UNIQUE,
-nombre_proveedor varchar(50) NOT NULL,
-direccion_proveedor varchar(50) NOT NULL,
-telf_proveedor varchar (15),
-fax_proveedor varchar(15)
+id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+nif char(9) NOT NULL UNIQUE,
+nombre varchar(50) NOT NULL,
+direccion varchar(50) NOT NULL,
+telefono int,
+fax int
 );
 
 INSERT INTO 
-proveedores (nif_proveedor, nombre_proveedor, direccion_proveedor, telf_proveedor, fax_proveedor)
+proveedores (nif, nombre, direccion, telefono, fax)
 VALUES 
 ('A12345678', 'El Corte Inglés', 'Calle Gran Vía, 28013, Madrid', '915948800', '915948801'),
 ('B12345678', 'Amazon', 'Calle Princesa, 52, 28008, Madrid', '915948802', '915948803'),
@@ -25,119 +26,104 @@ VALUES
 ('I12345678', 'MediaMarkt (Barcelona)', 'Calle Gran Vía, 2, 08012, Barcelona', '935948816', '935948817');
 
 CREATE TABLE gafas(
-id_gafa int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-marca_gafa varchar(20) NOT NULL, 
-graduacion float NOT NULL,
-tipo_montura varchar(30) NOT NULL,
+id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+marca varchar(20) NOT NULL, 
+grad_derch float NOT NULL,
+grad_izq float NOT NULL,
+tipo_montura ENUM('flotante', 'pasta', 'metálica') NOT NULL,
 color_montura varchar(30) NOT NULL,
-color_vidrio varchar(30) NOT NULL,
-precio smallint UNSIGNED NOT NULL,
-nif_proveedor varchar(15) NOT NULL,
-CONSTRAINT fk_pedidos_proveedores FOREIGN KEY (nif_proveedor) REFERENCES proveedores (nif_proveedor)
+color_vidrio_izq varchar(40) NOT NULL,
+color_vidrio_der varchar(40) NOT NULL,
+precio decimal(6,2) UNSIGNED NOT NULL,
+id_proveedor int NOT NULL,
+	-- no puede haber dos registros en la tabla gafas con el mismo id(gafa) y el mismo id_proveedor lo que garantiza que cada marca de gafas solo puede ser vendida por un único proveedor
+UNIQUE (id, id_proveedor), 
+CONSTRAINT fk_gafas_proveedores FOREIGN KEY (id_proveedor) REFERENCES proveedores (id)
 );
 
 INSERT INTO 
-gafas (marca_gafa, graduacion, tipo_montura, color_montura, color_vidrio, precio, nif_proveedor)
+gafas (id, marca, grad_derch, grad_izq, tipo_montura, color_montura, color_vidrio_izq, color_vidrio_der, precio, id_proveedor)
 VALUES
-('Ray-Ban', 4.00, 'Metálica', 'Dorado', 'Verde', 120, 'I12345678'),
-('Oakley', 5.50, 'Plástica', 'Negro', 'Marrón', 150, 'E12345678'),
-('Dolce & Gabbana', 6.00, 'Metálica', 'Rojo', 'Azul', 180, 'B12345678'),
-('Versace', 7.50, 'Plástica', 'Blanco', 'Rosa', 210, 'I12345678'),
-('Armani', 8.00, 'Metálica', 'Plata', 'Cristalino', 240, 'E12345678'),
-('Prada', 9.50, 'Plástica', 'Negro mate', 'Gris', 270, 'B12345678'),
-('Chanel', 10.00, 'Metálica', 'Oro rosa', 'Violeta', 300, 'I12345678');
+(1, 'Ray-Ban', 0.75, 0.5, 'flotante', 'marrón', 'gris', 'gris', 55.99, 1),
+(2, 'Óptica 2000', -1.0, -0.75, 'pasta', 'negra', 'marfil', 'marfil', 39.99, 2),
+(3, 'Hawkers', 0.25, 0.25, 'metálica', 'dorada', 'verde', 'verde', 44.99, 3),
+(4, 'Carolina Herrera', 1.25, 0.8, 'metálica', 'plateada', 'azul', 'azul', 110.00, 4),
+(5, 'Armani Exchange', -1.5, -1.25, 'flotante', 'marrón', 'negra', 'negra', 89.99, 5),
+(6, 'Versace', 0.5, 0.25, 'pasta', 'negra', 'verde', 'verde', 150.00, 6);
+
 
 CREATE TABLE empleados(
-id_empleado int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-nombre_empleado varchar(50) NOT NULL
+id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+nombre varchar(50) NOT NULL
+);
+
+INSERT INTO empleados (id, nombre)
+VALUES
+(1, "Martín López"),
+(2, "Carmen Pérez"),
+(3, "Antonio Martínez"),
+(4, "Laura García"),
+(5, "Luis Rodríguez"),
+(6, "David García"),
+(7, "María González"),
+(8, "Pedro Sánchez");
+
+CREATE TABLE clientes (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(50) NOT NULL,
+  direccion VARCHAR(50) NULL,
+  telefono int NULL,
+  email VARCHAR(50) NULL,
+	/* CURRENT_TIMESTAMP: introduce automaticamente la fecha y hora en que se produce el registro */
+  fecha_registro_cliente DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP);
+    
+-- He creado varias inserciones para que la fecha de venta se registre en momentos diferentes
+INSERT INTO
+clientes (id, nombre, direccion, telefono, email) 
+VALUES
+(1, 'Juan Pérez', 'Calle Mayor, 1', 666123456, 'juan.perez@gmail.com'),
+(2, 'María López', 'Calle Fuencarral, 2', 999234567, 'maria.lopez@hotmail.com'),
+(3, 'Pedro Sánchez', 'Calle Gran Vía, 3', 888345678, 'pedro.sanchez@yahoo.es'),
+(4, 'Ana García', 'Calle Alcalá, 4', 777456789, 'ana.garcia@outlook.com');
+INSERT INTO 
+clientes (id, nombre, direccion, telefono, email) 
+VALUES
+(5, 'Luis Fernández', 'Calle Princesa, 5', '666567890', 'luis.fernandez@gmail.com'),
+(6, 'Carmen Gómez', 'Calle Serrano, 6', '999678901', 'carmen.gomez@hotmail.com'),
+(7, 'José Rodríguez', 'Calle Goya, 7', '888789012', 'jose.rodriguez@yahoo.es'),
+(8, 'Isabel Martínez', 'Calle Velázquez, 8', '777890123', 'isabel.martinez@outlook.com'),
+(9, 'Antonio García', 'Calle Colón, 9', '666901234', 'antonio.garcia@gmail.com');
+
+CREATE TABLE recomendaciones(
+id_recomendacion int UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+id_cliente_recomendador int UNSIGNED NOT NULL,
+id_cliente_recomendado int UNSIGNED NOT NULL,
+FOREIGN KEY (id_cliente_recomendador) REFERENCES clientes (id),
+FOREIGN KEY (id_cliente_recomendado) REFERENCES clientes (id)
 );
 
 INSERT INTO 
-	empleados (id_empleado, nombre_empleado)
-VALUES
-	(1, 'Juan Pérez'),
-	(2, 'María López'),
-	(3, 'Pedro Sánchez'),
-	(4, 'Ana García'),
-	(5, 'Luis Fernández'),
-	(6, 'Carmen Gómez'),
-	(7, 'José Rodríguez'),
-	(8, 'Isabel Martínez');
-
-CREATE TABLE optica.clientes (
-  id_cliente INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  nombre_cliente VARCHAR(50) NOT NULL,
-  direccion_cliente VARCHAR(50) NULL,
-  telf_cliente VARCHAR(15) NULL,
-  email VARCHAR(50) NULL,
-  cliente_recomendo VARCHAR(45) NULL,
-	/* CURRENT_TIMESTAMP: introduce automaticamente la fecha y hora en que se produce el registro */
-  fecha_registro_cliente DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP);
-
--- He creado varias inserciones para que la fecha de venta se registre en momentos diferentes
-INSERT INTO 
-clientes (id_cliente, nombre_cliente, direccion_cliente, telf_cliente, email, cliente_recomendo) 
-VALUES
-(1, 'Juan Pérez', 'Calle Mayor, 1', '666 123 456', 'juan.perez@gmail.com', NULL),
-(2, 'María López', 'Calle Fuencarral, 2', '999 234 567', 'maria.lopez@hotmail.com', 1),
-(3, 'Pedro Sánchez', 'Calle Gran Vía, 3', '888 345 678', 'pedro.sanchez@yahoo.es', NULL),
-(4, 'Ana García', 'Calle Alcalá, 4', '777 456 789', 'ana.garcia@outlook.com', 2);
-INSERT INTO 
-	clientes (id_cliente, nombre_cliente, direccion_cliente, telf_cliente, email, cliente_recomendo) 
-VALUES
-(5, 'Luis Fernández', 'Calle Princesa, 5', '666 567 890', 'luis.fernandez@gmail.com', 3),
-(6, 'Carmen Gómez', 'Calle Serrano, 6', '999 678 901', 'carmen.gomez@hotmail.com', 4),
-(7, 'José Rodríguez', 'Calle Goya, 7', '888 789 012', 'jose.rodriguez@yahoo.es', 5),
-(8, 'Isabel Martínez', 'Calle Velázquez, 8', '777 890 123', 'isabel.martinez@outlook.com', 6),
-(9, 'Antonio García', 'Calle Colón, 9', '666 901 234', 'antonio.garcia@gmail.com', 7);
-INSERT INTO 
-	clientes (id_cliente, nombre_cliente, direccion_cliente, telf_cliente, email, cliente_recomendo) 
-VALUES
-(10, 'Laura López', 'Calle Serrano, 10', '999 012 345', 'laura.lopez@hotmail.com', 8),
-(11, 'David Fernández', 'Calle Goya, 11', '888 123 456', 'david.fernandez@yahoo.es', 9),
-(12, 'Marta Gómez', 'Calle Velázquez, 12', '777 456 789', 'marta.gomez@outlook.com', 10);
-INSERT INTO 
-	clientes (id_cliente, nombre_cliente, direccion_cliente, telf_cliente, email, cliente_recomendo) 
-VALUES
-(13, 'Pedro Rodríguez', 'Calle Colón, 13', '666 789 012', 'pedro.rodriguez@gmail.com', 11),
-(14, 'Ana Martínez', 'Calle Serrano, 14', '999 890 123', 'ana.martinez@hotmail.com', 12);
--- ----------------------------------
+recomendaciones (id_cliente_recomendador, id_cliente_recomendado)
+VALUES (1, 2), (3, 4), (5, 6), (7, 8);
     
 CREATE TABLE ventas( 
-id_venta int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+cantidad int UNSIGNED NOT NULL,
 id_gafa int UNSIGNED NOT NULL,
 id_empleado int UNSIGNED NOT NULL,
 id_cliente int UNSIGNED NOT NULL,
 fecha_venta DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-CONSTRAINT fK_ventas_empleados FOREIGN KEY (id_empleado) REFERENCES empleados (id_empleado),
-CONSTRAINT fk_ventas_gafas FOREIGN KEY (id_gafa) REFERENCES gafas (id_gafa),
-CONSTRAINT fk_ventas_clientes FOREIGN KEY (id_cliente) REFERENCES clientes (id_cliente)
+CONSTRAINT fK_ventas_empleados FOREIGN KEY (id_empleado) REFERENCES empleados (id),
+CONSTRAINT fk_ventas_gafas FOREIGN KEY (id_gafa) REFERENCES gafas (id),
+CONSTRAINT fk_ventas_clientes FOREIGN KEY (id_cliente) REFERENCES clientes (id)
 );
 
--- He creado varias inserciones para que la fecha de venta se registre en momentos diferentes
-INSERT INTO 
-	ventas (id_gafa, id_empleado, id_cliente) 
+INSERT INTO ventas (cantidad, id_gafa, id_empleado, id_cliente, fecha_venta)
 VALUES
-	(5, 4, 3),
-	(3, 7, 6);
-INSERT INTO 
-	ventas (id_gafa, id_empleado, id_cliente) 
-VALUES   
-	(6, 5, 2),
-	(1, 4, 3);
-INSERT INTO 
-ventas (id_gafa, id_empleado, id_cliente) 
-VALUES
-	(2, 4, 2),
-	(5, 5, 3);
-INSERT INTO 
-	ventas (id_gafa, id_empleado, id_cliente) 
-VALUES  
-	(2, 5, 2),
-	(6, 7, 7);
-INSERT INTO 
-	ventas (id_gafa, id_empleado, id_cliente, fecha_venta) 
-VALUES
-	(5, 4, 3, "2022-10-10");
-    
--- --------------------------
+(1, 1, 1, 1, '2023-12-25 12:00:00'),
+(2, 5, 2, 2, '2023-12-22 13:00:00'),
+(3, 3, 3, 3, '2023-12-11 14:00:00'),
+(4, 4, 2, 4, '2023-12-10 15:00:00'),
+(5, 5, 2, 5, '2023-11-29 16:00:00'),
+(6, 6, 6, 6, '2023-10-30 17:00:00');
+
