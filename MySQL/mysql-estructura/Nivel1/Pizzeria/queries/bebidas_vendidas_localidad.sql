@@ -1,11 +1,10 @@
 -- Lista cuántos productos de tipo “Bebidas” se han vendido en una determinada localidad.
 SELECT
-	pe.cantidad_productos,
-	t.localidad
+	t.localidad, SUM(dp.cantidad_producto) AS cantidad_bebidas
 FROM productos p
-JOIN pedidos pe 
-	ON p.id_producto = pe.id_producto
-JOIN tiendas t
-	ON t.id_tienda = pe.id_tienda
-WHERE p.tipo_producto LIKE '%bebidas%' 
-	AND t.localidad LIKE '%Madrid%';
+JOIN detalle_pedidos dp ON dp.id_producto = p.id
+JOIN pedidos pe ON pe.id = dp.id_pedido
+JOIN tiendas t	ON t.id = pe.id_tienda    
+WHERE p.tipo_producto LIKE '%bebidas%' AND t.localidad LIKE '%Madrid%'
+GROUP BY t.localidad;
+    

@@ -3,5 +3,9 @@ SELECT
 	COUNT(*) AS cantidad_pedidos
 FROM pedidos pe
 JOIN empleados e
-	ON e.id_empleado = pe.id_empleado
-WHERE e.nom_empleado LIKE 'Juan Pérez';
+	ON e.id = pe.id_empleado
+WHERE e.nombre='Luis García';
+
+
+
+
