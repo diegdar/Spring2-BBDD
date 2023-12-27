@@ -1,5 +1,6 @@
 -- Lista cuántos pedidos ha efectuado un determinado empleado/a.
 SELECT
+	e.nombre AS nom_empleado,
 	COUNT(*) AS cantidad_pedidos
 FROM pedidos pe
 JOIN empleados e
