@@ -72,12 +72,13 @@ CREATE TABLE clientes (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(50) NOT NULL,
   direccion VARCHAR(50) NULL,
+  id_cliente_recomendador int UNSIGNED NULL,
   telefono int NULL,
   email VARCHAR(50) NULL,
 	/* CURRENT_TIMESTAMP: introduce automaticamente la fecha y hora en que se produce el registro */
   fecha_registro_cliente DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP);
     
--- He creado varias inserciones para que la fecha de venta se registre en momentos diferentes
+-- He creado varias inserciones para que la fecha de registro sea en momentos diferentes
 INSERT INTO
 clientes (id, nombre, direccion, telefono, email) 
 VALUES
@@ -86,25 +87,13 @@ VALUES
 (3, 'Pedro Sánchez', 'Calle Gran Vía, 3', 888345678, 'pedro.sanchez@yahoo.es'),
 (4, 'Ana García', 'Calle Alcalá, 4', 777456789, 'ana.garcia@outlook.com');
 INSERT INTO 
-clientes (id, nombre, direccion, telefono, email) 
+clientes (id, nombre, direccion, telefono, email, id_cliente_recomendador) 
 VALUES
-(5, 'Luis Fernández', 'Calle Princesa, 5', '666567890', 'luis.fernandez@gmail.com'),
-(6, 'Carmen Gómez', 'Calle Serrano, 6', '999678901', 'carmen.gomez@hotmail.com'),
-(7, 'José Rodríguez', 'Calle Goya, 7', '888789012', 'jose.rodriguez@yahoo.es'),
-(8, 'Isabel Martínez', 'Calle Velázquez, 8', '777890123', 'isabel.martinez@outlook.com'),
-(9, 'Antonio García', 'Calle Colón, 9', '666901234', 'antonio.garcia@gmail.com');
-
-CREATE TABLE recomendaciones(
-id_recomendacion int UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-id_cliente_recomendador int UNSIGNED NOT NULL,
-id_cliente_recomendado int UNSIGNED NOT NULL,
-FOREIGN KEY (id_cliente_recomendador) REFERENCES clientes (id),
-FOREIGN KEY (id_cliente_recomendado) REFERENCES clientes (id)
-);
-
-INSERT INTO 
-recomendaciones (id_cliente_recomendador, id_cliente_recomendado)
-VALUES (1, 2), (3, 4), (5, 6), (7, 8);
+(5, 'Luis Fernández', 'Calle Princesa, 5', '666567890', 'luis.fernandez@gmail.com', 2),
+(6, 'Carmen Gómez', 'Calle Serrano, 6', '999678901', 'carmen.gomez@hotmail.com', 1),
+(7, 'José Rodríguez', 'Calle Goya, 7', '888789012', 'jose.rodriguez@yahoo.es', 1),
+(8, 'Isabel Martínez', 'Calle Velázquez, 8', '777890123', 'isabel.martinez@outlook.com', 4),
+(9, 'Antonio García', 'Calle Colón, 9', '666901234', 'antonio.garcia@gmail.com', 2);
     
 CREATE TABLE ventas( 
 id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
