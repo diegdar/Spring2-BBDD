@@ -50,9 +50,6 @@ db.gafas.insertMany
           email: "marias@gmail.com",
           fechaRegistro: "2022-10-20",
           _idClienteRecomendador: 133      
-        },
-        {
-          
         }
       ]
     },
