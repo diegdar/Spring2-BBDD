@@ -76,7 +76,7 @@ CREATE TABLE videos_playlist(
     CONSTRAINT fk_videosPlaylist_playlists FOREIGN KEY (playlist_id) REFERENCES playlists (id)
 );
 
-CREATE TABLE likes_dislikes_videos (
+CREATE TABLE reacciones_videos (
     video_id INT NOT NULL,
     usuarioReacciona_id INT NOT NULL,
     reaccionVideo ENUM("like", "dislike") NOT NULL,
@@ -96,7 +96,7 @@ CREATE TABLE comentarios (
   FOREIGN KEY (usuarioCreador_id) REFERENCES usuarios (id)
 );
 
-CREATE TABLE reaccion_comentarios (
+CREATE TABLE reacciones_comentarios (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     comentario_id INT NOT NULL,
     usuarioReacciona_id INT NOT NULL,
@@ -162,7 +162,7 @@ VALUES
     (3, 3),
     (4, 4);
 
-INSERT INTO likes_dislikes_videos (video_id, usuarioReacciona_id, reaccionVideo, fechaReaccion)
+INSERT INTO reacciones_videos (video_id, usuarioReacciona_id, reaccionVideo, fechaReaccion)
 VALUES
     (1, 2, 'like', '2022-06-15 14:45:00'),
     (2, 3, 'dislike', '2022-06-21 11:00:00'),
@@ -176,7 +176,7 @@ VALUES
     ('Muy útil el tutorial, gracias', '2022-06-26 18:00:00', 4, 3),
     ('Excelentes consejos, los pondré en práctica', '2022-07-01 13:30:00', 1, 4);
 
-INSERT INTO reaccion_comentarios (comentario_id, usuarioReacciona_id, reaccionComentario, fechaReaccion)
+INSERT INTO reacciones_comentarios (comentario_id, usuarioReacciona_id, reaccionComentario, fechaReaccion)
 VALUES
     (1, 3, 'like', '2022-06-15 15:15:00'),
     (2, 4, 'dislike', '2022-06-21 12:00:00'),
