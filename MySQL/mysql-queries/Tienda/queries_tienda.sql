@@ -1,3 +1,11 @@
+/*
+NOTAS🗒️:
+1: La ventaja de no utilizar un JOIN es que es más eficiente. La consulta solo necesita acceder a una tabla, por lo que es más rápida. Además, la consulta es más fácil de escribir y entender.
+
+Sin embargo, la consulta puede ser menos flexible si se desea obtener más información sobre los productos de Lenovo. Por ejemplo, si se desea obtener el precio o la fecha de lanzamiento de los productos de Lenovo, se necesitaría una consulta más compleja.
+
+ */
+
 -- 1.	Lista el nombre de todos los productos que hay en la tabla "producto".
 SELECT nombre FROM producto;
 -- 2.	Lista los nombres y precios de todos los productos de la tabla "producto".
@@ -19,9 +27,9 @@ SELECT nombre, ROUND(precio, 0) FROM producto;
 -- 10.	Lista los nombres y precios de todos los productos de la tabla "producto", truncando el valor del precio para mostrarlo sin ninguna cifra decimal.
 SELECT nombre, TRUNCATE(precio, 0) FROM producto;
 -- 11.	Lista el código de los fabricantes que tienen productos en la tabla "producto".
-SELECT f.codigo FROM fabricante f JOIN producto p ON f.codigo = p.codigo_fabricante;
+SELECT codigo_fabricante FROM producto;
 -- 12.	Lista el código de los fabricantes que tienen productos en la tabla "producto", eliminando los códigos que aparecen repetidos.
-SELECT DISTINCT f.codigo FROM fabricante f JOIN producto p ON f.codigo = p.codigo_fabricante;
+SELECT DISTINCT codigo_fabricante FROM producto;
 -- 13.	Lista los nombres de los fabricantes ordenados de forma ascendente.
 SELECT nombre FROM fabricante ORDER BY nombre ASC;
 -- 14.	Lista los nombres de los fabricantes ordenados de forma descendente.
@@ -37,7 +45,7 @@ SELECT nombre, precio FROM producto ORDER BY precio ASC LIMIT 1;
 -- 19.	Lista el nombre y precio del producto más caro. (Utiliza solamente las cláusulas ORDER BY y LIMIT). NOTA: Aquí no podrías usar MAX(precio), necesitarías GROUP BY.
 SELECT nombre, precio FROM producto ORDER BY precio DESC LIMIT 1;
 -- 20.	Lista el nombre de todos los productos del fabricante cuyo código de fabricante es igual a 2.
-SELECT p.nombre AS nom_producto FROM producto p  JOIN fabricante f ON f.codigo = p.codigo_fabricante WHERE f.codigo = 2;
+SELECT p.nombre AS nom_producto FROM producto p  WHERE codigo_fabricante = 2;
 -- 21.	Devuelve una lista con el nombre del producto, precio y nombre de fabricante de todos los productos de la base de datos.
 SELECT p.nombre AS nom_producto, p.precio, f.nombre AS nom_fabricante FROM producto p JOIN fabricante f ON f.codigo = p.codigo_fabricante;
 -- 22.	Devuelve una lista con el nombre del producto, precio y nombre de fabricante de todos los productos de la base de datos. Ordena el resultado por el nombre del fabricante, por orden alfabético.
@@ -68,10 +76,11 @@ SELECT f.codigo, f.nombre FROM producto p JOIN fabricante f ON f.codigo = p.codi
 SELECT f.nombre AS nombre_fabricante, p.nombre AS nombre_producto FROM fabricante f LEFT JOIN producto p ON p.codigo_fabricante = f.codigo;
 -- 35.	Devuelve un listado en el que sólo aparezcan aquellos fabricantes que no tienen ningún producto asociado.
 SELECT f.nombre AS nombre_fabricante FROM fabricante f LEFT JOIN producto p ON p.codigo_fabricante = f.codigo WHERE p.nombre IS NULL;
--- 36.	Devuelve todos los productos del fabricante Lenovo. (Sin utilizar INNER JOIN).
-SELECT p.nombre AS nombre_producto FROM producto p RIGHT JOIN fabricante f ON p.codigo_fabricante = f.codigo WHERE f.nombre='lenovo' AND p.nombre IS NOT NULL; 
--- 37.	Devuelve todos los datos de los productos que tienen el mismo precio que el producto más caro del fabricante Lenovo. (Sin utilizar INNER JOIN).
-SELECT p.codigo AS codigo_producto, p.nombre AS nom_producto, p.precio FROM producto p RIGHT JOIN fabricante f ON p.codigo_fabricante = f.codigo WHERE f.nombre='lenovo' ORDER BY p.precio DESC LIMIT 1; 
+-- 36.	Devuelve todos los productos del fabricante Lenovo. (Sin utilizar JOIN).
+SELECT nombre FROM producto WHERE codigo_fabricante = (SELECT codigo FROM fabricante WHERE nombre="lenovo"); -- nota1
+-- 37.	Devuelve todos los datos de los productos que tienen el mismo precio que el producto más caro del fabricante Lenovo. (Sin utilizar JOIN).    
+SELECT * FROM producto WHERE codigo_fabricante=(SELECT codigo FROM fabricante WHERE nombre='lenovo') 
+ORDER BY precio DESC LIMIT 1; -- nota1
 -- 38.	Lista el nombre del producto más caro del fabricante Lenovo.
 SELECT p.nombre AS nom_producto FROM producto p JOIN fabricante f ON p.codigo_fabricante = f.codigo WHERE f.nombre='lenovo' ORDER BY p.precio DESC LIMIT 1; 
 -- 39.	Lista el nombre del producto más barato del fabricante Hewlett-Packard.

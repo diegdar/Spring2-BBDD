@@ -54,7 +54,7 @@ db.restaurantes.find(
   { "grades.score": { $gt: 90 } },
   { _id: 0, restaurant_id: 1, name: 1, borough: 1, "grades.score": 1 }
 );
-// 9.	Escribe una consulta para encontrar los restaurantes que tienen un resultado mayor que 80 pero menos que 100.
+// (⚠️devuelve algún restaurante que no cumpliría con el enunciado.)9.	Escribe una consulta para encontrar los restaurantes que tienen un score mayor que 80 pero menos que 100.
 db.restaurantes.find(
   { "grades.score": { $gt: 80, $lt: 100 } },
   { _id: 0, restaurant_id: 1, name: 1, borough: 1, "grades.score": 1 }

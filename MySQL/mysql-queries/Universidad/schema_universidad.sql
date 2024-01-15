@@ -111,7 +111,7 @@ INSERT INTO profesor VALUES (15, 2);
 INSERT INTO profesor VALUES (16, 3);
 INSERT INTO profesor VALUES (17, 4);
 INSERT INTO profesor VALUES (18, 5);
-INSERT INTO profesor VALUES (20, 6);
+-- INSERT INTO profesor VALUES (20, 6);
  
  /* Grado */
 INSERT INTO grado VALUES (1, 'Grado en Ingeniería Agrícola (Plan 2015)');
