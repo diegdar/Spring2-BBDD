@@ -15,19 +15,10 @@ db.gafas.insertMany
         },
       ],
       precio: 179,
-      clientes:
-      [
-        {
-          _idCliente: 134,
-          nombre: "Manuel Lopez Obrador",
-          direccion: "Calle La Rambla, 123",
-          telefono: "966341289",
-          email: "manuelop@gmail.com",
-          fechaRegistro: "2022-11-02",
-          _idClienteRecomendador: 122,      
-        },        
-      ]
-    },
+      cliente: {
+        "_id": {"$ref": "clientes", "$id": "f1767562e1a350000000001"}
+      },
+  },
     {
       _idGafa: "OA187",
       marca: "Oakley",
@@ -41,17 +32,9 @@ db.gafas.insertMany
         },
       ],
       precio: 149,
-      clientes:[
-        {
-          _idCliente: 246,
-          nombre: "Maria Sanchez",
-          direccion: "Calle Principal, 456",
-          telefono: "966987654",
-          email: "marias@gmail.com",
-          fechaRegistro: "2022-10-20",
-          _idClienteRecomendador: 133      
-        }
-      ]
+      cliente: {
+        "_id": {"$ref": "clientes", "$id": "65aa920d96da87544421e633"}
+      },
     },
     {
       _idGafa: "RA328",
@@ -69,32 +52,20 @@ db.gafas.insertMany
       precio: 133,
       clientes:[
         {
-          _idCliente: 134,
-          nombre: "Manuel Lopez Obrador",
-          direccion: "Calle La Rambla, 123",
-          telefono: "966341289",
-          email: "manuelop@gmail.com",
-          fechaRegistro: "2022-11-02",
-          _idClienteRecomendador: 122,      
+          "_id": {"$ref": "clientes", "$id": "65aa964996da87544421e636"}
         },
         {
-          _idCliente: 358,
-          nombre: "Juan Perez",
-          direccion: "Calle Secundaria, 789",
-          telefono: "966654321",
-          email: "juanperez@gmail.com",
-          fechaRegistro: "2022-09-15",
-          _idClienteRecomendador: 122,      
-        }
+          "_id": {"$ref": "clientes", "$id": "65aa920d96da87544421e633"}
+        },
       ]
     },
     {
       _idGafa: "NI125",
-      marca: "Nike",
+      marca: "Gucci",
       tipoMontura: "flotante",
       proveedor: [
         {
-          nombre: "Nike",
+          nombre: "Gucci",
           direccion: "Av. del Deporte 246",
           telefono: "966789654",
           nif: "A24681357",
@@ -103,14 +74,8 @@ db.gafas.insertMany
       precio: 169,
       clientes:[
         {
-          _idCliente: 358,
-          nombre: "Juan Perez",
-          direccion: "Calle Secundaria, 789",
-          telefono: "966654321",
-          email: "juanperez@gmail.com",
-          fechaRegistro: "2022-09-15",
-          _idClienteRecomendador: 122,      
-        }
+          "_id": {"$ref": "clientes", "$id": "65aa920d96da87544421e635"}
+        },
       ]
     },
     {
@@ -128,23 +93,11 @@ db.gafas.insertMany
       precio: 159,
       clientes:[
         {
-          _idCliente: 134,
-          nombre: "Manuel Lopez Obrador",
-          direccion: "Calle La Rambla, 123",
-          telefono: "966341289",
-          email: "manuelop@gmail.com",
-          fechaRegistro: "2022-11-02",
-          _idClienteRecomendador: 122,      
+          "_id": {"$ref": "clientes", "$id": "65aa964996da87544421e636"}
         },
         {
-          _idCliente: 246,
-          nombre: "Maria Sanchez",
-          direccion: "Calle Principal, 456",
-          telefono: "966987654",
-          email: "marias@gmail.com",
-          fechaRegistro: "2022-10-20",
-          _idClienteRecomendador: 133,      
-        }
+          "_id": {"$ref": "clientes", "$id": "65aa920d96da87544421e633"}
+        },
       ]
     }
 ]);
