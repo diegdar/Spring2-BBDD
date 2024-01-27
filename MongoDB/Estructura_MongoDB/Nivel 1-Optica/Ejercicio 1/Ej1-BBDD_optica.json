@@ -1,0 +1,196 @@
+[{
+  "_id": {
+    "$oid": "65b4cc4bc490760e16434190"
+  },
+  "cliente_id": 134,
+  "nombre": "Manuel Lopez Obrador",
+  "direccion": "Calle La Rambla, 123",
+  "telefono": "966341289",
+  "email": "manuelop@gmail.com",
+  "fecha_registro": "2022-11-02",
+  "cliente_id_recomendador": 246,
+  "gafas_compradas": [
+    {
+      "marca": "Rayban",
+      "graduacion": [
+        0.75,
+        0.5
+      ],
+      "color_cristales": [
+        "marron",
+        "gris"
+      ],
+      "tipo_montura": "flotante",
+      "color_montura": "gris",
+      "_id_empleado_venta": 32,
+      "fecha_venta": "2022-11-02",
+      "precio": 133,
+      "proveedor": {
+        "_id": {
+          "$ref": "proveedores",
+          "$id": "65b4cf78c490760e16434193"
+        }
+      }
+    },
+    {
+      "marca": "Gucci",
+      "graduacion": [
+        1.25,
+        0.75
+      ],
+      "color_cristales": [
+        "verde",
+        "azul"
+      ],
+      "tipo_montura": "pasta",
+      "color_montura": "negro",
+      "_id_empleado_venta": 12,
+      "fecha_venta": "2022-03-13",
+      "precio": 179,
+      "proveedor": {
+        "_id": {
+          "$ref": "proveedores",
+          "$id": "65b4cf78c490760e16434194"
+        }
+      }
+    },
+    {
+      "marca": "Prada",
+      "graduacion": [
+        0.5,
+        0.25
+      ],
+      "color_cristales": [
+        "marron",
+        "gris"
+      ],
+      "tipo_montura": "wayfarer",
+      "color_montura": "blanco",
+      "_id_empleado_venta": 22,
+      "fecha_venta": "2021-08-03",
+      "precio": 159,
+      "proveedor": {
+        "_id": {
+          "$ref": "proveedores",
+          "$id": "65b4cf78c490760e16434195"
+        }
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "65b4cc4bc490760e16434191"
+  },
+  "cliente_id": 246,
+  "nombre": "Maria Sanchez",
+  "direccion": "Calle Principal, 456",
+  "telefono": "966987654",
+  "email": "marias@gmail.com",
+  "fecha_registro": "2022-10-20",
+  "cliente_id_recomendador": 134,
+  "gafas_compradas": [
+    {
+      "marca": "Oakley",
+      "graduacion": [
+        1,
+        0.75
+      ],
+      "color_cristales": [
+        "negro",
+        "gris"
+      ],
+      "tipo_montura": "flotante",
+      "color_montura": "negro",
+      "_id_empleado_venta": 32,
+      "fecha_venta": "2022-10-20",
+      "precio": 149,
+      "proveedor": {
+        "_id": {
+          "$ref": "proveedores",
+          "$id": "65b4cf78c490760e16434196"
+        }
+      }
+    },
+    {
+      "marca": "Prada",
+      "graduacion": [
+        0.25,
+        0.25
+      ],
+      "color_cristales": [
+        "azul",
+        "gris"
+      ],
+      "tipo_montura": "pasta",
+      "color_montura": "negro",
+      "_id_empleado_venta": 12,
+      "fecha_venta": "2022-01-05",
+      "precio": 199,
+      "proveedor": {
+        "_id": {
+          "$ref": "proveedores",
+          "$id": "65b4cf78c490760e16434195"
+        }
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "65b4cc4bc490760e16434192"
+  },
+  "cliente_id": 358,
+  "nombre": "Juan Perez",
+  "direccion": "Calle Secundaria, 789",
+  "telefono": "966654321",
+  "email": "juanperez@gmail.com",
+  "fecha_registro": "2022-09-15",
+  "cliente_id_recomendador": 134,
+  "gafas_compradas": [
+    {
+      "marca": "Gucci",
+      "graduacion": [
+        0.5,
+        0.5
+      ],
+      "color_cristales": [
+        "verde",
+        "gris"
+      ],
+      "tipo_montura": "flotante",
+      "color_montura": "negro",
+      "_id_empleado_venta": 22,
+      "fecha_venta": "2022-09-15",
+      "precio": 169,
+      "proveedor": {
+        "_id": {
+          "$ref": "proveedores",
+          "$id": "65b4cf78c490760e16434194"
+        }
+      }
+    },
+    {
+      "marca": "Rayban",
+      "graduacion": [
+        0.75,
+        0.75
+      ],
+      "color_cristales": [
+        "marron",
+        "gris"
+      ],
+      "tipo_montura": "metalica",
+      "color_montura": "negro",
+      "_id_empleado_venta": 32,
+      "fecha_venta": "2022-06-20",
+      "precio": 159,
+      "proveedor": {
+        "_id": {
+          "$ref": "proveedores",
+          "$id": "65b4cf78c490760e16434193"
+        }
+      }
+    }
+  ]
+}]

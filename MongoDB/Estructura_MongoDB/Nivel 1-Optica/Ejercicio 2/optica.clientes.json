@@ -1,0 +1,35 @@
+[{
+    "_id": {
+      "$oid": "65b4d19ac490760e16434197"
+    },
+    "cliente_id": 134,
+    "nombre": "Manuel Lopez Obrador",
+    "direccion": "Calle La Rambla, 123",
+    "telefono": "966341289",
+    "email": "manuelop@gmail.com",
+    "fechaRegistro": "2022-11-02",
+    "_idClienteRecomendador": 122
+  },
+  {
+    "_id": {
+      "$oid": "65b4d19ac490760e16434198"
+    },
+    "cliente_id": 246,
+    "nombre": "Maria Sanchez",
+    "direccion": "Calle Principal, 456",
+    "telefono": "966987654",
+    "email": "marias@gmail.com",
+    "fechaRegistro": "2022-10-20",
+    "cliente_idRecomendador": 133
+  },
+  {
+    "_id": {
+      "$oid": "65b4d19ac490760e16434199"
+    },
+    "nombre": "Juan Perez",
+    "direccion": "Calle Secundaria, 789",
+    "telefono": "966654321",
+    "email": "juanperez@gmail.com",
+    "fechaRegistro": "2022-09-15",
+    "cliente_idRecomendador": 122
+  }]
